@@ -1,57 +1,28 @@
 #include "mbed.h"
-#include <chrono>
-#include <limits.h>
 
-#include "encoder.h"
-#include "motor.h"
+#include "robot.h"
 
-// -- Declaring peripherals --
-// -> Motors
-Motor mot_left(P2_5, P2_3);
-Motor mot_right(P2_4, P2_2);
+Robot robot(
+    // Motors
+    P2_4, P2_5, // Left and right power
+    P2_2, P0_6, // Left and right direction
 
-// -> Encoder
-Encoder enc_left(P0_4);
-Encoder enc_right(P0_5);
+    // Encoders
+    P0_4, P0_5, // Left and right
 
-// -> Photoresistances
-// AnalogIn ph_left(P0_23);
-AnalogIn ph_left_center(P0_24);
-AnalogIn ph_center(P0_25);
-AnalogIn ph_right_center(P0_26);
-// AnalogIn ph_right(P1_30);
+    // Photoresistor array
+    P0_24, P0_25, P0_26, // L C R
 
-// -> Infrared
-DigitalIn cg(P0_0);
-DigitalIn cd(P0_1);
-
-void reaction()
-{
-    
-}
+    // Infrared
+    P0_0, P0_1 // Forward and right
+);
 
 int main()
 {
+    robot.init();
+    
     while (true)
     {
-        for (unsigned int i = 0; i < 10; ++i)
-            wait_ns(INT_MAX);
-
-        // -- READ INFRA CAPTEURS --
-        // printf("%d %d\n",
-        //     cd.read(), cg.read()
-        // );
-
-        // -- FAILED TEST : SET DIRECTION --
-        // m1 = 0;
-        // m2 = 1;
-
-        // printf("%d %d\n", enc_left.getPeriod(), enc_right.getPeriod());
-
-        printf("%d %d %d\n",
-            (int)(ph_left_center.read() * 100),
-            (int)(ph_center.read() * 100),
-            (int)(ph_right_center.read() * 100)
-        );
+        robot.step();
     }
 }

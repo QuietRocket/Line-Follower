@@ -1,9 +1,15 @@
 #include "motor.h"
 
-Motor::Motor(const PinName& power, const PinName& direction) : power{power}, direction{direction} {};
+Motor::Motor(const PinName& powerOut, const PinName& directionOut) : powerOut{powerOut}, directionOut{directionOut} {};
+
+void Motor::setValue(float value, Direction direction)
+{
+    this->motorValue = value;
+    this->motorDirection = direction;
+}
 
 void Motor::trigger()
 {
-    this->direction = 0;
-    this->power = 0.3;
+    this->powerOut = this->motorValue;
+    this->directionOut = this->motorDirection;
 }
