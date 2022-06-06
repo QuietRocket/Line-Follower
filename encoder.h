@@ -6,7 +6,21 @@
 class Encoder
 {
 public:
-    Encoder(const PinName& pin);
+    Encoder(
+        const PinName& pin
+    ) :
+        inter{pin},
+        period{0}
+    {
+        inter.rise([&]() {
+            onRise();
+        });
+
+        inter.fall([&]() {
+            onFall();
+        });
+    }
+
     unsigned int getPeriod();
 private:
     void onRise();

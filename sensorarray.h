@@ -6,7 +6,16 @@
 class SensorArray
 {
 public:
-    SensorArray(const PinName& left, const PinName& center, const PinName& right);
+    SensorArray(
+        const PinName& left,
+        const PinName& center,
+        const PinName& right
+    ) :
+        left{left},
+        center{center},
+        right{right}
+    {}
+    
     void debug();
 private:
     AnalogIn left;

@@ -30,7 +30,15 @@ public:
         // Infrared
         const PinName& infra_forward,
         const PinName& infra_right
-    );
+    ) :
+        motor_left{motor_left_power, motor_left_direction},
+        motor_right{motor_right_power, motor_right_direction},
+        encoder_left{encoder_left},
+        encoder_right{encoder_right},
+        sensor_array{phr_left, phr_center, phr_right},
+        infra_forward{infra_forward},
+        infra_right{infra_right}
+    {}
     
     void init();
     void step();

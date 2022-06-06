@@ -1,19 +1,8 @@
 #include "encoder.h"
 
-Encoder::Encoder(const PinName& pin) : inter{pin}, period{0}
-{
-    inter.rise([&]() {
-        this->onRise();
-    });
-
-    inter.fall([&]() {
-        this->onFall();
-    });
-}
-
 unsigned int Encoder::getPeriod()
 {
-    return this->period;
+    return period;
 }
 
 void Encoder::onRise()

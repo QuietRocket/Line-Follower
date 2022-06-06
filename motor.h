@@ -11,7 +11,14 @@ enum Direction {
 class Motor
 {
 public:
-    Motor(const PinName& power, const PinName& direction);
+    Motor(
+        const PinName& powerOut,
+        const PinName& directionOut
+    ) :
+        powerOut{powerOut},
+        directionOut{directionOut}
+    {}
+    
     void setValue(float value, Direction direction);
     void trigger();
 private:
