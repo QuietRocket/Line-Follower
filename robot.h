@@ -51,7 +51,8 @@ public:
         encoder_right{encoder_right},
         sensor_array{phr_left, phr_center, phr_right},
         infra_forward{infra_forward},
-        infra_right{infra_right}
+        infra_right{infra_right},
+        currentValues{0, 0, 0}
     {}
 
     void debug();
@@ -76,6 +77,7 @@ private:
     // Non-peripherals
     Ticker ticker;
     bool debugSwitch;
+    Values currentValues;
 
     // Internal methods
     void reaction();

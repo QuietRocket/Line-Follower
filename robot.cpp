@@ -10,8 +10,10 @@ void Robot::init()
 
 void Robot::debug()
 {
-    // sensor_array.debug();
-    // printf("%d\n", infra_right.read());
+    if (state == State::GO)
+    {
+        printf("%d %d\n", -currentValues.left + currentValues.right, currentValues.center);
+    }
 }
 
 void Robot::step()
@@ -49,18 +51,27 @@ void Robot::step()
             if (infra_right.read()) state = State::GO;
             break;
         case GO:
-            printf("%d\n", abs(-5 - 10));
-            state = State::STOP;
+            currentValues = sensor_array.getValues();
+            reaction();
             break;
         case STOP:
             break;
     }
-    
+
     motor_left.trigger();
     motor_right.trigger();
 }
 
 void Robot::reaction()
 {
+    if (currentValues.center > 25)
+    {
+        motor_left.setValue(0, Direction::FORWARD);
+        motor_right.setValue(0, Direction::FORWARD);
+        state = State::STOP;
+        return;
+    }
 
+    motor_left.setValue(0.3, Direction::FORWARD);
+    motor_right.setValue(0.3, Direction::FORWARD);
 }
