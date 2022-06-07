@@ -4,14 +4,14 @@
 #include "mbed.h"
 
 typedef struct {
-    int floor;
-    int track;
+    float floor;
+    float track;
 } Intensity;
 
 typedef struct {
-    int left;
-    int center;
-    int right;
+    float left;
+    float center;
+    float right;
 } Values;
 
 class SensorArray
@@ -29,16 +29,14 @@ public:
         trackSet{false}
     {}
     
-    int getLeft();
-    int getCenter();
-    int getRight();
+    float getLeft();
+    float getCenter();
+    float getRight();
 
     void setFloor();
     void setTrack();
 
     Values getValues();
-
-    void debug();
 private:
     AnalogIn left_sensor;
     AnalogIn center_sensor;

@@ -1,18 +1,18 @@
 #include "sensorarray.h"
 
-int SensorArray::getLeft()
+float SensorArray::getLeft()
 {
-    return (int)(left_sensor.read() * 100);
+    return left_sensor.read();
 }
 
-int SensorArray::getCenter()
+float SensorArray::getCenter()
 {
-    return (int)(center_sensor.read() * 100);
+    return center_sensor.read();
 }
 
-int SensorArray::getRight()
+float SensorArray::getRight()
 {
-    return (int)(right_sensor.read() * 100);
+    return right_sensor.read();
 }
 
 void SensorArray::setFloor()
@@ -34,17 +34,8 @@ void SensorArray::setTrack()
 Values SensorArray::getValues()
 {
     return Values {
-        (int)((getLeft() - left_intensity.track) * 100.0 / (left_intensity.floor - left_intensity.track)),
-        (int)((getCenter() - center_intensity.track) * 100.0 / (center_intensity.floor - center_intensity.track)),
-        (int)((getRight() - right_intensity.track) * 100.0 / (right_intensity.floor - right_intensity.track)),
+        (getLeft() - left_intensity.track) / (left_intensity.floor - left_intensity.track),
+        (getCenter() - center_intensity.track) / (center_intensity.floor - center_intensity.track),
+        (getRight() - right_intensity.track) / (right_intensity.floor - right_intensity.track),
     };
-}
-
-void SensorArray::debug()
-{
-    printf("L%d C%d R%d\n",
-        getLeft(),
-        getCenter(),
-        getRight()
-    );
 }
