@@ -16,6 +16,7 @@ enum State
     GET_TRACK,
     GET_TRACK_DONE,
     GO,
+    LOST,
     STOP
 };
 
@@ -75,9 +76,15 @@ private:
     DigitalIn infra_right;
 
     // Non-peripherals
-    Ticker ticker;
+    Ticker debugTicker;
     bool debugSwitch;
+
+    Ticker reactionTicker;
+    bool reactionSwitch;
+
     Values currentValues;
+
+    Timer lostTimer;
 
     // Internal methods
     void reaction();
