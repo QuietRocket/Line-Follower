@@ -2,9 +2,22 @@
 #define __ROBOT_H__
 
 #include "mbed.h"
+#include <chrono>
+
 #include "motor.h"
 #include "encoder.h"
 #include "sensorarray.h"
+
+enum State
+{
+    INIT,
+    GET_FLOOR,
+    GET_FLOOR_DONE,
+    GET_TRACK,
+    GET_TRACK_DONE,
+    GO,
+    STOP
+};
 
 class Robot
 {
@@ -31,6 +44,7 @@ public:
         const PinName& infra_forward,
         const PinName& infra_right
     ) :
+        state{State::INIT},
         motor_left{motor_left_power, motor_left_direction},
         motor_right{motor_right_power, motor_right_direction},
         encoder_left{encoder_left},
@@ -39,10 +53,15 @@ public:
         infra_forward{infra_forward},
         infra_right{infra_right}
     {}
+
+    void debug();
     
     void init();
     void step();
 private:
+    // Peripherals
+    State state;
+
     Motor motor_left;
     Motor motor_right;
 
@@ -53,6 +72,13 @@ private:
 
     DigitalIn infra_forward;
     DigitalIn infra_right;
+
+    // Non-peripherals
+    Ticker ticker;
+    bool debugSwitch;
+
+    // Internal methods
+    void reaction();
 };
 
 #endif
